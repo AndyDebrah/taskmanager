@@ -1,3 +1,122 @@
+## Sprint 1 Review
+
+**Sprint Goal**
+
+Deliver a working Sprint 1 prototype for the Task Manager backend: user registration and login with JWT-based authentication, task create/list/update endpoints, unit/integration tests, CI workflow, and Docker packaging.
+
+**Scope Delivered**
+
+- Registration endpoint (`POST /api/auth/register`)
+- Login endpoint with JWT issuance (`POST /api/auth/login`)
+- JWT validation filter and stateless security
+- Task endpoints: create (`POST /api/tasks`), list (`GET /api/tasks`), update status (`PUT /api/tasks/{id}`)
+- Unit and integration tests for controllers and services
+- GitHub Actions workflow to build and test (CI placeholder)
+- `Dockerfile` for containerization
+
+**Demo Evidence**
+
+Below are image placeholders — replace with screenshots taken during demo.
+
+- GitHub Actions run (successful): ![CI success](docs/screenshots/ci-success.png) — "CI run successful"
+- Postman/Register success: ![Register](docs/screenshots/register-success.png) — "Register returned 200 and username"
+- Postman/Login success (with JWT): ![Login](docs/screenshots/login-success.png) — "Login returned token"
+- Postman/Create Task: ![Create Task](docs/screenshots/task-create.png) — "Create task returned 201 and task JSON"
+- Postman/List Tasks: ![List Tasks](docs/screenshots/task-list.png) — "List returned array of tasks"
+- Tests passing (local or CI): ![Tests pass](docs/screenshots/tests-pass.png) — "All unit/integration tests green"
+
+**How to Reproduce the Demo**
+
+1. Run unit tests:
+
+```bash
+mvn clean test
+```
+
+2. Run the application locally:
+
+```bash
+mvn spring-boot:run
+# Default base URL: http://localhost:8080
+```
+
+3. Sample curl requests (replace values as needed):
+
+Register:
+
+```bash
+curl -X POST http://localhost:8080/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"username":"demo","password":"pw"}'
+```
+
+Login (returns JSON {"token":"..."}):
+
+```bash
+curl -X POST http://localhost:8080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"demo","password":"pw"}'
+```
+
+Create task (replace TOKEN):
+
+```bash
+curl -X POST http://localhost:8080/api/tasks \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <TOKEN>" \
+  -d '{"title":"Buy milk","description":"one litre"}'
+```
+
+List tasks:
+
+```bash
+curl -X GET http://localhost:8080/api/tasks \
+  -H "Authorization: Bearer <TOKEN>"
+```
+
+4. To run in Docker (build image then run):
+
+```bash
+mvn package -DskipTests
+docker build -t taskmanager:latest .
+docker run -p 8080:8080 taskmanager:latest
+```
+
+**Done vs Not Done**
+
+- Done:
+  - Registration, Login + JWT
+  - Task create/list/update
+  - Controller & service tests
+  - Dockerfile and CI workflow (configured)
+- Not Done / Deferred:
+  - Frontend dashboard (optional)
+  - End-to-end tests and coverage reporting
+  - Full CD / IaC deployment
+
+**Updated Product Backlog (moves to Sprint 2)**
+
+- Add E2E tests (Cypress or Playwright)
+- Add coverage reporting and badge
+- Implement frontend dashboard and protected UI
+- Add deployment IaC and CD pipeline
+
+**Risks & Mitigations**
+
+1. Risk: JWT secret embedded in code — Mitigation: move to secure config / secrets manager before production.
+2. Risk: Incomplete E2E coverage — Mitigation: add targeted E2E tests for auth + tasks in Sprint 2.
+3. Risk: No production deployment — Mitigation: define IaC and deployment pipeline in Sprint 2.
+
+---
+
+## CI Proof (placeholder)
+
+- Workflow name: GitHub Actions - Java CI (replace with actual name)
+- Run URL / ID: [PASTE_RUN_URL_HERE]
+- Date & time (UTC): [PASTE_DATE_TIME_HERE]
+- Status: ✅ Successful
+
+Replace the placeholders above with the real CI run link and timestamp after triggering CI.
 # Sprint 1 Review
 
 ## Backlog items delivered
