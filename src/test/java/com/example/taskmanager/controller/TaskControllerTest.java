@@ -91,4 +91,26 @@ public class TaskControllerTest {
     void unauthorizedRequestGets401() throws Exception {
         mvc.perform(get("/api/tasks")).andExpect(status().isForbidden());
     }
+
+        @Test
+        void deleteTask() throws Exception {
+        String out = mvc.perform(post("/api/tasks").contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization","Bearer "+token)
+            .content(mapper.writeValueAsString(Map.of("title","ToDelete","description","d"))))
+            .andExpect(status().isCreated()).andReturn().getResponse().getContentAsString();
+        JsonNode n = mapper.readTree(out);
+        long id = n.get("id").asLong();
+
+        mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete("/api/tasks/"+id)
+            .header("Authorization","Bearer "+token))
+            .andExpect(status().isNoContent());
+
+        // verify gone
+        String list = mvc.perform(get("/api/tasks").header("Authorization","Bearer "+token))
+            .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        JsonNode arr = mapper.readTree(list);
+        boolean exists = false;
+        for (JsonNode it : arr) if (it.get("id").asLong()==id) exists = true;
+        assertThat(exists).isFalse();
+        }
 }
