@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,5 +41,11 @@ public class TaskController {
     @PutMapping("/{id}")
     public Task updateStatus(@PathVariable Long id, @RequestParam Status status, Authentication auth) {
         return service.updateStatus(id, status, auth.getName());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteTask(@PathVariable Long id, Authentication auth) {
+        service.deleteTask(id, auth.getName());
+        return ResponseEntity.noContent().build();
     }
 }
