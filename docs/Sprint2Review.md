@@ -46,3 +46,13 @@ curl http://localhost:8080/actuator/health
 
 - Actions page: https://github.com/AndyDebrah/taskmanager/actions
 - Run URL: [PASTE_RUN_URL_HERE]
+
+**Latest CI run**
+
+- Run URL: https://github.com/AndyDebrah/taskmanager/actions/runs/22070252613
+- Run ID: 22070252613
+- Date & time (UTC): 2026-02-16T16:21:02Z
+- Status: ❌ failure
+
+Logs: https://github.com/AndyDebrah/taskmanager/actions/runs/22070252613/logs
+Artifacts: https://github.com/AndyDebrah/taskmanager/actions/runs/22070252613/artifacts

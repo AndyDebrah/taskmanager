@@ -111,11 +111,18 @@ docker run -p 8080:8080 taskmanager:latest
 
 ## CI Proof (placeholder)
 
-- Workflow name: GitHub Actions - Java CI (replace with actual name)
-- Run URL / ID: [PASTE_RUN_URL_HERE]
-- Date & time (UTC): [PASTE_DATE_TIME_HERE]
-- Status: ✅ Successful
+ Workflow name: GitHub Actions - Java CI
+ Run URL: https://github.com/AndyDebrah/taskmanager/actions/runs/22070252613
+ Run ID: 22070252613
+ Date & time (UTC): 2026-02-16T16:21:02Z
+ Status: ❌ failure
 
+ Assistant note: The CI run completed with status `failure`. View logs and artifacts here:
+
+ - Logs: https://github.com/AndyDebrah/taskmanager/actions/runs/22070252613/logs
+ - Artifacts: https://github.com/AndyDebrah/taskmanager/actions/runs/22070252613/artifacts
+
+ Replace these entries with updated status/screenshots after any re-run.
 Assistant note: I attempted to query the repository's workflow runs but no recent runs were returned via the GitHub Actions API. You can view the Actions page for this repository to confirm run status and select the run to paste here:
 
 - Actions page: https://github.com/AndyDebrah/taskmanager/actions
