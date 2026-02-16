@@ -2,6 +2,8 @@ package com.example.taskmanager.controller;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +19,7 @@ import com.example.taskmanager.service.UserService;
 public class AuthController {
     private final UserService userService;
     private final JwtUtil jwtUtil;
+    private final Logger log = LoggerFactory.getLogger(AuthController.class);
 
     public AuthController(UserService userService, JwtUtil jwtUtil) {
         this.userService = userService;
@@ -28,6 +31,7 @@ public class AuthController {
         String u = body.get("username");
         String p = body.get("password");
         User user = userService.register(u, p);
+        log.info("User registered: {}", u);
         return ResponseEntity.ok(Map.of("username", user.getUsername()));
     }
 

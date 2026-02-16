@@ -3,6 +3,7 @@ package com.example.taskmanager.security;
 import java.security.Key;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
@@ -12,8 +13,12 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtUtil {
-    private final Key key = Keys.hmacShaKeyFor("replace-with-strong-secret-of-at-least-32-bytes".getBytes());
+    private final Key key;
     private final long ttl = 1000L * 60 * 60 * 24; // 1 day
+
+    public JwtUtil(@Value("${app.jwt.secret:replace-with-strong-secret}") String secret) {
+        this.key = Keys.hmacShaKeyFor(secret.getBytes());
+    }
 
     public String generateToken(String username) {
         return Jwts.builder()
