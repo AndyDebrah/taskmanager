@@ -17,15 +17,21 @@
   <script>
     const tokenKey = 'tm_token';
     async function load() {
-      const res = await fetch('/api/tasks', {headers:{'Authorization':'Bearer '+localStorage.getItem(tokenKey)}});
-      if (res.status===401) { document.body.innerHTML = '<h3>Please login via /api/auth/login with Postman or curl</h3>'; return; }
+      const token = localStorage.getItem(tokenKey);
+      if (!token) { window.location.href = '/login.html'; return; }
+      const res = await fetch('/api/tasks', {headers:{'Authorization':'Bearer '+token}});
+        if (res.status===401 || res.status===403) { window.location.href = '/login.html'; return; }
       const tasks = await res.json();
       const tbody = document.querySelector('#tasks tbody'); tbody.innerHTML='';
       tasks.forEach(t=>{
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${t.id}</td><td>${t.title}</td><td>${t.status}</td><td><button data-id="${t.id}">Complete</button></td>`;
-        tr.querySelector('button').onclick = async ()=>{
+        tr.innerHTML = `<td>${t.id}</td><td>${t.title}</td><td>${t.status}</td><td><button class="complete" data-id="${t.id}">Complete</button> <button class="delete" data-id="${t.id}">Delete</button></td>`;
+        tr.querySelector('.complete').onclick = async ()=>{
           await fetch('/api/tasks/'+t.id+'?status=COMPLETED',{method:'PUT',headers:{'Authorization':'Bearer '+localStorage.getItem(tokenKey)}});
+          load();
+        };
+        tr.querySelector('.delete').onclick = async ()=>{
+          await fetch('/api/tasks/'+t.id,{method:'DELETE',headers:{'Authorization':'Bearer '+localStorage.getItem(tokenKey)}});
           load();
         };
         tbody.appendChild(tr);
