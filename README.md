@@ -24,3 +24,8 @@ CI: GitHub Actions file at `.github/workflows/ci.yml` runs `mvn package` and tes
 - Retrospective: [docs/Sprint1Retro.md](docs/Sprint1Retro.md)
 
 # taskmanager
+
+Badges:
+
+- CI: ![CI](https://img.shields.io/badge/CI-pending-yellow) (replace with your GitHub Actions badge URL)
+- Coverage: ![coverage](https://img.shields.io/badge/coverage-unknown-lightgrey) (replace with coverage service badge after configuring coverage)
