@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Task Dashboard</title>
+  <style>table{border-collapse:collapse}td,th{border:1px solid #ddd;padding:8px}</style>
+</head>
+<body>
+  <h1>Tasks</h1>
+  <div>
+    <input id="title" placeholder="title" />
+    <input id="desc" placeholder="description" />
+    <button id="create">Create</button>
+  </div>
+  <table id="tasks"><thead><tr><th>ID</th><th>Title</th><th>Status</th><th>Action</th></tr></thead><tbody></tbody></table>
+
+  <script>
+    const tokenKey = 'tm_token';
+    async function load() {
+      const res = await fetch('/api/tasks', {headers:{'Authorization':'Bearer '+localStorage.getItem(tokenKey)}});
+      if (res.status===401) { document.body.innerHTML = '<h3>Please login via /api/auth/login with Postman or curl</h3>'; return; }
+      const tasks = await res.json();
+      const tbody = document.querySelector('#tasks tbody'); tbody.innerHTML='';
+      tasks.forEach(t=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${t.id}</td><td>${t.title}</td><td>${t.status}</td><td><button data-id="${t.id}">Complete</button></td>`;
+        tr.querySelector('button').onclick = async ()=>{
+          await fetch('/api/tasks/'+t.id+'?status=COMPLETED',{method:'PUT',headers:{'Authorization':'Bearer '+localStorage.getItem(tokenKey)}});
+          load();
+        };
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById('create').onclick = async ()=>{
+      const title = document.getElementById('title').value;
+      const desc = document.getElementById('desc').value;
+      await fetch('/api/tasks',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem(tokenKey)},body:JSON.stringify({title,description:desc})});
+      load();
+    };
+
+    load();
+  </script>
+</body>
+</html>

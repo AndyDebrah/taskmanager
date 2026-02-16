@@ -116,7 +116,11 @@ docker run -p 8080:8080 taskmanager:latest
 - Date & time (UTC): [PASTE_DATE_TIME_HERE]
 - Status: ✅ Successful
 
-Replace the placeholders above with the real CI run link and timestamp after triggering CI.
+Assistant note: I attempted to query the repository's workflow runs but no recent runs were returned via the GitHub Actions API. You can view the Actions page for this repository to confirm run status and select the run to paste here:
+
+- Actions page: https://github.com/AndyDebrah/taskmanager/actions
+
+If you'd like, I can wait and try again to fetch the run URL after you confirm the push triggered CI or after you re-run CI.
 # Sprint 1 Review
 
 ## Backlog items delivered

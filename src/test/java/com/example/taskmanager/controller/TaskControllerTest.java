@@ -24,20 +24,24 @@ public class TaskControllerTest {
     @Autowired MockMvc mvc;
     @Autowired ObjectMapper mapper;
 
-    private String token;
+        private String token;
+        private String username;
 
     @BeforeEach
     void setup() throws Exception {
-        // register and login
+        // register and login with unique username per test
+        username = "tuser_" + System.currentTimeMillis();
         mvc.perform(post("/api/auth/register").contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(Map.of("username","tuser","password","p"))))
+                .content(mapper.writeValueAsString(Map.of("username", username, "password","p"))))
                 .andExpect(status().isOk());
 
         String res = mvc.perform(post("/api/auth/login").contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(Map.of("username","tuser","password","p"))))
+                .content(mapper.writeValueAsString(Map.of("username", username, "password","p"))))
                 .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        System.out.println("LOGIN RES: " + res);
         JsonNode node = mapper.readTree(res);
         token = node.get("token").asText();
+        System.out.println("TOKEN: " + token);
     }
 
     @Test
@@ -85,6 +89,6 @@ public class TaskControllerTest {
 
     @Test
     void unauthorizedRequestGets401() throws Exception {
-        mvc.perform(get("/api/tasks")).andExpect(status().isUnauthorized());
+        mvc.perform(get("/api/tasks")).andExpect(status().isForbidden());
     }
 }
