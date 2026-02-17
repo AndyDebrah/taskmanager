@@ -1,1 +1,0 @@
-Registration endpoint tested placeholder

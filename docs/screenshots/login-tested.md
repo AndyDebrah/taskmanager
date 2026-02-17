@@ -1,1 +1,0 @@
-Login endpoint tested placeholder
