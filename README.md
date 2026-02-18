@@ -94,6 +94,5 @@ Badges (replace placeholders with real URLs)
 Contributing
 - Fork the repo, create a branch, open a PR against `main`. Keep changes focused and include tests for bug fixes or new features.
 
-License
-- (Add license here)
+
 
