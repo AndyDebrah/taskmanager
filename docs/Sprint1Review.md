@@ -117,7 +117,3 @@ Replace this section with an up-to-date run URL and timestamp after re-running C
 
 - The service uses an in-memory H2 database by default (`application.properties`). For production use, configure a persistent DB and externalize secrets.
 - The code includes an opt-in test/CI toggle for disabling authentication (`app.security.enabled=false`) which can simplify integration testing or CI validation when appropriate.
-
----
-
-_Document maintained by the development team. Update this file with any new demo evidence, run links or production deployment notes._
